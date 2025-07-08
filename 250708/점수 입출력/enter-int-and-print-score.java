@@ -4,6 +4,6 @@ public class Main {
 
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
-    System.out.println("your score is " + sc.nextInt() + " point.");
+    System.out.println("Your score is " + sc.nextInt() + " point.");
   }
 }
