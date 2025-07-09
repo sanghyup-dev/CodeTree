@@ -12,9 +12,9 @@ public class Main {
     } else if (a >= 80) {
       System.out.println("B");
     } else if (a >= 70) {
-      System.out.println("B");
+      System.out.println("C");
     } else if (a >= 60) {
-      System.out.println("B");
+      System.out.println("D");
     } else {
       System.out.println("F");
     }
