@@ -10,14 +10,15 @@ public class Main {
     for (int i = n; i < 101; i++) {
       if (i >= 90) {
         System.out.print("A ");
-      }else if (i >= 80) {
+      } else if (i >= 80) {
         System.out.print("B ");
-      }else if (i >= 70) {
+      } else if (i >= 70) {
         System.out.print("C ");
-      }else if (i >= 60) {
+      } else if (i >= 60) {
         System.out.print("D ");
-      }else {
-        System.out.print("E ");
+      } else {
+        System.out.print("F ");
       }
     }
-}}
+  }
+}
