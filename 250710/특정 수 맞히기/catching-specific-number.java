@@ -8,12 +8,12 @@ public class Main {
     while (true) {
       int a = sc.nextInt();
       if (a > 25) {
-        System.out.println("Good");
+        System.out.println("Lower");
       } else if (a == 25) {
-        System.out.println("Higher");
+        System.out.println("Good");
         break;
       } else {
-        System.out.println("Lower");
+        System.out.println("Higher");
       }
     }
   }
