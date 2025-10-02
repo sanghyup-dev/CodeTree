@@ -28,29 +28,42 @@ public class Main {
     dir = (dir + 3) % 4;
   }
 
-  public static boolean step() {/* returns isFinish*/
-    int r = x + dx[dir];
-    int c = y + dy[dir];
-    if (r < 0 || r >= n || c < 0 || c >= n) {
-      forwardCount++;
-      return true;
+  public static boolean isFinishFront() {
+    int tx = x + dx[dir];
+    int ty = y + dy[dir];
+    return tx < 0 || ty < 0 || tx >= n || ty >= n;
+  }
+
+  public static boolean isWallFront() {
+    int tx = x + dx[dir];
+    int ty = y + dy[dir];
+    return maze[tx][ty] == 1;
+  }
+
+  public static boolean isWallDiagonal() {
+    int tx = x + dx[dir] + dx[(dir + 1) % 4];
+    int ty = y + dy[dir] + dy[(dir + 1) % 4];
+    return maze[tx][ty] == 1;
+  }
+
+
+  public static void move() {
+    if (isFinishFront()) {
+      forward();
+      System.out.println(forwardCount);
+      System.exit(0);
     }
-    if (maze[r][c] == 1) {
+    if (isWallFront()) {
       turnLeft();
+      return;
+    }
+    if (isWallDiagonal()) {
+      forward();
     } else {
       forward();
-      r = x + dx[(dir + 1) % 4];
-      c = y + dy[(dir + 1) % 4];
-      if (r < 0 || r >= n || c < 0 || c >= n) {
-        forwardCount++;
-        return true;
-      }
-      if (maze[r][c] == 0) {
-        turnRight();
-        forward();
-      }
+      turnRight();
+      forward();
     }
-    return false;
   }
 
   public static void main(String[] args) {
@@ -66,8 +79,12 @@ public class Main {
       }
     }
     int cnt = 4 * n * n;
-    while (!step() && cnt-- > 0)
-      ;
-    System.out.println(cnt == 0 ? -1 : forwardCount);
+
+    while (cnt > forwardCount) {
+      move();
+    }
+    System.out.println(-1);
+
+
   }
 }
