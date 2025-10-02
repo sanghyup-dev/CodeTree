@@ -80,7 +80,7 @@ public class Main {
     }
     int cnt = 4 * n * n;
 
-    while (cnt-->0 {
+    while (cnt-->0) {
       move();
     }
     System.out.println(-1);
