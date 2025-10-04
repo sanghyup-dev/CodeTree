@@ -13,8 +13,8 @@ public class Main {
 
   public static void explodeBomb(int x, int y, int dist) {
     for (int i = 0; i < 4; i++) {
-      int tx = x + dx[i] * dist;
-      int ty = y + dy[i] * dist;
+      int tx = x + dx[i] * (1 << (dist - 1));
+      int ty = y + dy[i] * (1 << (dist - 1));
 
       if (tx < 0 || ty < 0 || tx >= n || ty >= n || grid[tx][ty] != 0) {
         continue;
