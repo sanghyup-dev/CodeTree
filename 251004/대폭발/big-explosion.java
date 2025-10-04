@@ -52,7 +52,7 @@ public class Main {
     int cnt = 0;
     for (int[] ints : grid) {
       for (int i : ints) {
-        cnt += i;
+        cnt += i != 0 ? 1 : 0;
       }
     }
     System.out.println(cnt);
