@@ -18,13 +18,13 @@ public class Main {
     if (dir == UP) {
       dir = RIGHT;
     }
-    if (dir == LEFT) {
+    else if (dir == LEFT) {
       dir = DOWN;
     }
-    if (dir == RIGHT) {
+    else if (dir == RIGHT) {
       dir = UP;
     }
-    if (dir == DOWN) {
+    else if (dir == DOWN) {
       dir = LEFT;
     }
   }
@@ -33,13 +33,13 @@ public class Main {
     if (dir == UP) {
       dir = LEFT;
     }
-    if (dir == LEFT) {
+    else if (dir == LEFT) {
       dir = UP;
     }
-    if (dir == RIGHT) {
+    else if (dir == RIGHT) {
       dir = DOWN;
     }
-    if (dir == DOWN) {
+    else if (dir == DOWN) {
       dir = RIGHT;
     }
   }
