@@ -41,7 +41,7 @@ public class Main {
     headX += dx[dir];
     headY += dy[dir];
 
-    if (headX < 0 || headX >= n || headY < 0 || headY >= n || grid[headX][headY] == SNAKE) {
+    if (headX < 0 || headX >= n || headY < 0 || headY >= n) {
       return false;
     }
 
@@ -49,6 +49,11 @@ public class Main {
       Dot tail = snake.poll();
       grid[tail.x][tail.y] = 0;
     }
+
+    if (grid[headX][headY] == SNAKE) {
+      return false;
+    }
+
     snake.add(new Dot(headX, headY));
     grid[headX][headY] = SNAKE;
     return true;
