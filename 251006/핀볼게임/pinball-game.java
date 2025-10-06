@@ -11,47 +11,41 @@ public class Main {
 
   public static int n;
   public static int[][] grid;
-  public static int dir = DOWN;
 
 
-  public static void downUp() {
+  public static int downUp(int dir) {
     if (dir == UP) {
-      dir = RIGHT;
+      return RIGHT;
     }
-    else if (dir == LEFT) {
-      dir = DOWN;
+    if (dir == LEFT) {
+      return DOWN;
     }
-    else if (dir == RIGHT) {
-      dir = UP;
+    if (dir == RIGHT) {
+      return UP;
     }
-    else if (dir == DOWN) {
-      dir = LEFT;
-    }
+    return LEFT;
   }
 
-  public static void upDown() {
+  public static int upDown(int dir) {
     if (dir == UP) {
-      dir = LEFT;
+      return LEFT;
     }
-    else if (dir == LEFT) {
-      dir = UP;
+    if (dir == LEFT) {
+      return UP;
     }
-    else if (dir == RIGHT) {
-      dir = DOWN;
+    if (dir == RIGHT) {
+      return DOWN;
     }
-    else if (dir == DOWN) {
-      dir = RIGHT;
-    }
+    return RIGHT;
   }
 
-  public static int findLength(int x, int y, int d) {
-    dir = d;
+  public static int findLength(int x, int y, int dir) {
     int cnt = 1;
     while (x >= 0 && y >= 0 && x < n && y < n) {
       if (grid[x][y] == DOWN_TO_UP) {
-        downUp();
+        dir = downUp(dir);
       } else if (grid[x][y] == UP_TO_DOWN) {
-        upDown();
+        dir = upDown(dir);
       }
       x += dx[dir];
       y += dy[dir];
