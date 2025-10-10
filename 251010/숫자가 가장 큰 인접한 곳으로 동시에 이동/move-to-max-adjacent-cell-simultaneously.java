@@ -9,7 +9,7 @@ public class Main {
   private static int[][] marbleMap;
 
   public static int[] dx = {0, 0, 1, -1};
-  public static int[] dy = {0, 0, 1, -1};
+  public static int[] dy = {1, -1, 0, 0};
 
   public static boolean inRange(int x, int y) {
     return x >= 0 && y >= 0 && x < n && y < n;
