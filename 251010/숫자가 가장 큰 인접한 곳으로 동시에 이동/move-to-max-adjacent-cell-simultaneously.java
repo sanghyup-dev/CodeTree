@@ -26,7 +26,7 @@ public class Main {
         max = grid[tx][ty];
       }
     }
-    tempMap[x + dx[dir]][y + dy[dir]] ^= 1;
+    tempMap[x + dx[dir]][y + dy[dir]] += 1;
   }
 
   public static void iterate() {
@@ -39,6 +39,13 @@ public class Main {
       }
     }
     marbleMap = tempMap;
+    for (int i = 0; i < n; i++) {
+      for (int j = 0; j < n; j++) {
+        if (marbleMap[i][j] > 1) {
+          marbleMap[i][j] = 0;
+        }
+      }
+    }
   }
 
   public static void main(String[] args) {
