@@ -1,97 +1,111 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
+import java.io.*;
+import java.util.*;
 
 public class Main {
 
-  public static class Ball {
+  static final int RIGHT = 0, DOWN = 1, LEFT = 2, UP = 3;
+  static final int[] dx = {0, 1, 0, -1};
+  static final int[] dy = {1, 0, -1, 0};
 
-    int x;
-    int y;
-    int dir;
-
-    public Ball(int x, int y, int dir) {
-      this.x = x;
-      this.y = y;
-      this.dir = dir;
-    }
+  static int dirOf(char c) {
+    return (c == 'R') ? RIGHT : (c == 'D') ? DOWN : (c == 'L') ? LEFT : UP;
   }
 
-  public static int[] dx = {0, 1, 0, -1};
-  public static int[] dy = {1, 0, -1, 0};
+  public static void main(String[] args) throws Exception {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    StringBuilder out = new StringBuilder();
+    StringTokenizer st;
 
-  public static final int RIGHT = 0, DOWN = 1, LEFT = 2, UP = 3;
+    int T = Integer.parseInt(br.readLine().trim());
+    while (T-- > 0) {
+      st = new StringTokenizer(br.readLine());
+      int n = Integer.parseInt(st.nextToken());
+      int m = Integer.parseInt(st.nextToken());
 
-  public static Map<Character, Integer> mapper = new HashMap<>();
+      // store balls in flat arrays (0-based)
+      int[] x = new int[m];
+      int[] y = new int[m];
+      int[] d = new int[m];
+      boolean[] alive = new boolean[m];
+      Arrays.fill(alive, true);
 
-  static {
-    mapper.put('R', RIGHT);
-    mapper.put('D', DOWN);
-    mapper.put('L', LEFT);
-    mapper.put('U', UP);
-  }
-
-  private static int t;
-  private static int n;
-  private static int m;
-  public static Set<Ball> balls;
-
-  public static Set<Ball>[][] grid;
-
-  public static boolean inRange(int x, int y) {
-    return x >= 0 && x < n && y >= 0 && y < n;
-  }
-
-  public static void move(Ball ball) {
-    int x = ball.x + dx[ball.dir];
-    int y = ball.y + dy[ball.dir];
-    if (!inRange(x, y)) {
-      ball.dir = (ball.dir + 2) % 4;
-      grid[ball.x][ball.y].add(ball);
-    } else {
-      ball.x += dx[ball.dir];
-      ball.y += dy[ball.dir];
-      grid[x][y].add(ball);
-    }
-  }
-
-  public static void main(String[] args) {
-    Scanner sc = new Scanner(System.in);
-    t = sc.nextInt();
-    while (t-- > 0) {
-      n = sc.nextInt();
-      m = sc.nextInt();
-      balls = new HashSet<>();
       for (int i = 0; i < m; i++) {
-        int x = sc.nextInt() - 1;
-        int y = sc.nextInt() - 1;
-        char d = sc.next().charAt(0);
-        balls.add(new Ball(x, y, mapper.get(d)));
+        st = new StringTokenizer(br.readLine());
+        x[i] = Integer.parseInt(st.nextToken()) - 1;
+        y[i] = Integer.parseInt(st.nextToken()) - 1;
+        d[i] = dirOf(st.nextToken().charAt(0));
       }
 
-      for (int i = 0; i < 2 * n + 2; i++) {
-        grid = new Set[n][n];
-        for (int j = 0; j < n; j++) {
-          for (int k = 0; k < n; k++) {
-            grid[j][k] = new HashSet<>();
+      // counts per cell; n<=50 so n*n<=2500 (cheap to clear)
+      int area = n * n;
+      int[] cnt = new int[area];
+      int[] nx = new int[m], ny = new int[m], nd = new int[m];
+
+      // With "pause at wall", axis period = 2n, so simulate up to 2n steps.
+      int steps = 2 * n;
+      for (int step = 0; step < steps; step++) {
+        if (m == 0) {
+          break;
+        }
+
+        // 1) compute tentative next state & count landings
+        Arrays.fill(cnt, 0);
+        for (int i = 0; i < m; i++) {
+          if (!alive[i]) {
+            continue;
+          }
+          int tx = x[i] + dx[d[i]];
+          int ty = y[i] + dy[d[i]];
+
+          if (tx < 0 || tx >= n || ty < 0 || ty >= n) {
+            // hit wall: stay, flip direction (costs 1s)
+            nx[i] = x[i];
+            ny[i] = y[i];
+            nd[i] = (d[i] + 2) % 4;
+          } else {
+            nx[i] = tx;
+            ny[i] = ty;
+            nd[i] = d[i];
+          }
+          cnt[nx[i] * n + ny[i]]++;
+        }
+
+        // 2) resolve collisions (cells with count >= 2)
+        boolean anyCollision = false;
+        for (int i = 0; i < m; i++) {
+          if (!alive[i]) {
+            continue;
+          }
+          int id = nx[i] * n + ny[i];
+          if (cnt[id] >= 2) {
+            alive[i] = false;
+            anyCollision = true;
           }
         }
-        for (Ball ball : balls) {
-          move(ball);
-        }
-        for (int j = 0; j < n; j++) {
-          for (int k = 0; k < n; k++) {
-            if (grid[j][k].size() > 1) {
-              balls.removeAll(grid[j][k]);
-            }
+
+        // 3) commit survivors
+        for (int i = 0; i < m; i++) {
+          if (!alive[i]) {
+            continue;
           }
+          x[i] = nx[i];
+          y[i] = ny[i];
+          d[i] = nd[i];
+        }
+
+        // Optional micro-early exit: if no collision and all balls are away from walls
+        // you could break; but with steps <= 100 it's not necessary.
+      }
+
+      int survivors = 0;
+      for (int i = 0; i < m; i++) {
+        if (alive[i]) {
+          survivors++;
         }
       }
-      System.out.println(balls.size());
+      out.append(survivors).append('\n');
     }
+
+    System.out.print(out.toString());
   }
 }
