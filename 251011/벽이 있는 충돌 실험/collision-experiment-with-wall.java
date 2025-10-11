@@ -67,8 +67,8 @@ public class Main {
       m = sc.nextInt();
       balls = new HashSet<>();
       for (int i = 0; i < m; i++) {
-        int x = sc.nextInt();
-        int y = sc.nextInt();
+        int x = sc.nextInt() - 1;
+        int y = sc.nextInt() - 1;
         char d = sc.next().charAt(0);
         balls.add(new Ball(x, y, mapper.get(d)));
       }
@@ -85,8 +85,8 @@ public class Main {
         }
         for (int j = 0; j < n; j++) {
           for (int k = 0; k < n; k++) {
-            if (grid[i][j].size() > 1) {
-              balls.removeAll(grid[i][j]);
+            if (grid[j][k].size() > 1) {
+              balls.removeAll(grid[j][k]);
             }
           }
         }
