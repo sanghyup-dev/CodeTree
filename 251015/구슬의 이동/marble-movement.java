@@ -63,8 +63,8 @@ public class Main {
     }
     balls.sort(Comparator.comparingInt((Ball ball) -> ball.r)
         .thenComparingInt(ball -> ball.c)
-        .thenComparingInt(ball -> ball.v).reversed()
-        .thenComparingInt(ball -> ball.id).reversed());
+        .thenComparing(Comparator.comparingInt((Ball b) -> b.v).reversed())
+        .thenComparing(Comparator.comparingInt((Ball b) -> b.id).reversed()));
 
     int curR = 0;
     int curC = 0;
