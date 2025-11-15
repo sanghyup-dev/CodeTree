@@ -6,7 +6,7 @@ public class Main {
     public static List<Integer> candidates = new ArrayList<>();
 
     public static void backtracking(int length, String expression){
-        if(length==7){
+        if(length==6){
             max = Math.max(max, calculate(expression, candidates));
             return;
         }
