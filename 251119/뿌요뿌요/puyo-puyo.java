@@ -14,6 +14,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         n = sc.nextInt();
+        
         grid = new int[n][n];
         visited = new boolean[n][n];
 
@@ -37,7 +38,7 @@ public class Main {
             if(nx<0 || ny<0 || nx>=n || ny>=n || visited[nx][ny] || grid[nx][ny]!=grid[x][y]){
                 continue;
             }
-
+            
             currentCnt++;
             visited[nx][ny] = true;
             findConnected(nx, ny);
@@ -45,7 +46,8 @@ public class Main {
     }
 
     public static void findLength(int x, int y){
-        currentCnt = 0;
+        currentCnt = 1;
+        visited[x][y] = true;
         findConnected(x,y);
         max = Math.max(max, currentCnt);
         if(currentCnt>=4) explodeCnt++;
