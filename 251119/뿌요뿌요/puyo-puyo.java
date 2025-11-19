@@ -47,6 +47,7 @@ public class Main {
     public static void findLength(int x, int y){
         currentCnt = 0;
         findConnected(x,y);
+        if(currentCnt<2) return;
         max = Math.max(max, currentCnt);
         if(currentCnt>=4) explodeCnt++;
     }
