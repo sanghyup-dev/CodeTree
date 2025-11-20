@@ -9,7 +9,7 @@ public class Main {
         if(n>2) memo[3] = 1;
 
         for(int i = 4;i<=n;i++){
-            memo[i] = (memo[2] + memo[3])%10007;
+            memo[i] = (memo[i-2] + memo[i-3])%10007;
         }
 
         System.out.println(memo[n]);
