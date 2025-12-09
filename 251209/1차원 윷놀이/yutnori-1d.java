@@ -30,6 +30,7 @@ public class Main {
                 if( i>=m) cnt++;
             }
             maxCnt = Math.max(maxCnt, cnt);
+            return;
         }
         for(int i = 0; i<k;i++){
             if(horses[i]<m){
