@@ -22,7 +22,7 @@ public class Main {
             return;
         }
 
-        for(int i = 1; i<=2; i++){
+        for(int i = 1; i<=k; i++){
             if(i == prev && i == prevprev) continue;
             nums.add(i);
             iteration(it+1, i, prev);
