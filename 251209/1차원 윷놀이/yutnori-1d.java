@@ -33,11 +33,9 @@ public class Main {
             return;
         }
         for(int i = 0; i<k;i++){
-            if(horses[i]<m){
                 horses[i]+=nums[it];
                 iter(it+1);
                 horses[i]-=nums[it];
-            }
         }
     }
 
