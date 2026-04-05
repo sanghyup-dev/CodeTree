@@ -15,8 +15,8 @@ public class Main {
         int[][] dp = new int[n+1][n+1];
 
         for(int i = 1; i<=n; i++){
-            dp[i][1] = matrix[i][1];
-            dp[1][i] = matrix[1][i];
+            dp[i][1] = Math.max(matrix[i][1], dp[i-1][1]);
+            dp[1][i] =  Math.max(matrix[1][i], dp[1][i-1]);
         }
 
         for(int i  = 2; i<=n; i++){
